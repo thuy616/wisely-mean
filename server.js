@@ -133,44 +133,96 @@ router.route('/bears/:bear_id')
     });
 
 // on routes that end in /api/android/apps
-router.route('/api/android/apps')
+router.route('/apps')
 
     .get(function(req, res) {
-        // ?query=all
 
+        //App.find(function(err, apps) {
+        //    if (err)
+        //        res.send(err);
+        //
+        //    res.json(apps);
+        //});
 
-        // ?query=top_paid_apps
+        var url_parts = url.parse(req.url, true);
+        var query = url_parts.query;
 
-        // ?query=top_free_apps
+        var filter = query.filter
 
-        // ?query=top_grossing_apps
+        console.log ("filter: " + filter);
+        if (filter == "all" || !filter) {
+            // ?filter=all
+            App.find(function(err, apps) {
+                if (err)
+                    res.send(err);
 
-        // ?query=top_paid_games
+                res.json(apps);
+            });
+        } else {
+            // e.g.: ?filter=top_paid_apps
+            App.find({'labels' : filter}, function(err, apps) {
+                if (err)
+                    res.send(err);
 
-        // ?query=top_free_games
+                res.json(apps);
+            });
+        }
     })
 
     .post(function(req, res){
         // find app with the same google id (not the default mongo _id)
-        App.findOne({'id': req.body.id }, function(err, app) {
+        App.findOne({'name': req.body.name }, function(err, app) {
             if (err) res.send(err);
+
             if (!app) {
                 app = new App();
+                app.genres = [];
+                app.labels = [];
             }
             app.name = req.body.name;
-            app.id = req.body.id;
+            //app.id = req.body.id;
             app.url = req.body.url;
-            app.image_small = req.body.image_small;
-            app.image_medium = req.body.image_medium;
-        })
-        // if not exist, create a new App object
+            app.image_small = req.body.image;
+            app.image_medium = req.body.image; //TODO
+            app.image_large = req.body.image; //TODO
 
-        // save
+            app.labels.push(req.body.label);
+            app.price = req.body.price;
+            app.currency = req.body.currency;
+
+            app.description = req.body.description;
+            app.rating = req.body.rating;
+            app.rating_count = req.body.rating_count;
+            app.developer = req.body.developer;
+            app.developer_url = req.body.developer_url;
+
+            console.log("app: ");
+            console.log(app);
+            // if not exist, create a new App object
+
+            // save
+            app.save(function(err) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'App created!' });
+            });
+        });
+        //var app;
+
+
     })
 
     // simply clean up all db before adding new results
     // TODO: only update entries
-    .delete();
+    .delete(function(req, res) {
+        App.remove(function(err, apps) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'All apps Successfully deleted' });
+        });
+    });
 
 
 // REGISTER OUR ROUTES -------------------------------
