@@ -14,6 +14,7 @@ app.use(morgan('dev')); // log requests to the console
 // configure body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
 var port     = process.env.PORT || 8080; // set our port
 
@@ -25,7 +26,7 @@ var App = require('./app/models/app');
 // ROUTES FOR OUR API
 // =============================================================================
 
-// create our router
+// create our backend router
 var router = express.Router();
 
 // middleware to use for all requests
@@ -224,9 +225,19 @@ router.route('/apps')
         });
     });
 
-
 // REGISTER OUR ROUTES -------------------------------
-app.use('/api', router);
+//app.use('/api', router);
+//
+//// FRONTEND ROUTER
+//var front_router = express.Router();
+//
+//// test route to make sure everything is working (accessed at GET http://localhost:8080/front)
+//front_router.get('/', function(req, res) {
+//    res.json({ message: 'Welcome to our frontend page!' });
+//});
+//
+//app.use('/public', front_router);
+app.use(express.static('public'));
 
 // START THE SERVER
 // =============================================================================
