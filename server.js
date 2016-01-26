@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var app        = express();
 var morgan     = require('morgan');
 var url = require('url');
+//var scraper = require('./scraper')
+var request = require("request");
+var cheerio = require("cheerio");
 
 // configure app
 app.use(morgan('dev')); // log requests to the console
@@ -225,9 +228,34 @@ router.route('/apps')
         });
     });
 
+router.route("/scrape/topfree")
+    .post(function(req, res) {
+        console.log("scraping triggered");
+        var url_top_free = "https://play.google.com/store/apps/collection/topselling_free"
+        request(url_top_free, function (error, response, body) {
+            if (error) {
+                console.log("We’ve encountered an error: " + error);
+                res.send(error);
+            }
+
+            var $ = cheerio.load(body),
+                apps = $(".apps");
+            //TODO: more processing here
+            console.log("Apps: ");
+            for(var i=0; i<10; i++) {
+                app = apps.get(i);
+                console.log("app " + i + ": ");
+                console.log(app);
+            }
+
+            res.json({message: 'something\'s happening'})
+
+        });
+    })
+
 // REGISTER OUR ROUTES -------------------------------
-//app.use('/api', router);
-//
+app.use('/api', router);
+
 //// FRONTEND ROUTER
 //var front_router = express.Router();
 //
