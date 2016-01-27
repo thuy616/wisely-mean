@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 var app        = express();
 var morgan     = require('morgan');
 var url = require('url');
-//var scraper = require('./scraper')
+
 var request = require("request");
 var cheerio = require("cheerio");
+
 
 // configure app
 app.use(morgan('dev')); // log requests to the console
@@ -25,6 +26,8 @@ var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/test'); // connect to our database
 var Bear     = require('./app/models/bear');
 var App = require('./app/models/app');
+
+
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -228,29 +231,15 @@ router.route('/apps')
         });
     });
 
-router.route("/scrape/topfree")
+router.route("/scrape")
     .post(function(req, res) {
+
         console.log("scraping triggered");
-        var url_top_free = "https://play.google.com/store/apps/collection/topselling_free"
-        request(url_top_free, function (error, response, body) {
-            if (error) {
-                console.log("We’ve encountered an error: " + error);
-                res.send(error);
-            }
+        var scraper = require('./playstore_scraper');
+        scraper.scrape_top_free(addOrUpdateApps);
+        scraper.scrape_top_paid(addOrUpdateApps)
+        res.json({message: "Scraping done!"});
 
-            var $ = cheerio.load(body),
-                apps = $(".apps");
-            //TODO: more processing here
-            console.log("Apps: ");
-            for(var i=0; i<10; i++) {
-                app = apps.get(i);
-                console.log("app " + i + ": ");
-                console.log(app);
-            }
-
-            res.json({message: 'something\'s happening'})
-
-        });
     })
 
 // REGISTER OUR ROUTES -------------------------------
@@ -271,3 +260,24 @@ app.use(express.static('public'));
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+var addOrUpdateApps = function(apps) {
+    apps.forEach(function(thisApp) {
+        // find app with the same google id (not the default mongo _id)
+        App.findOne({'name': thisApp.name}, function (err, app) {
+            if (err) {
+                // resend err
+            }
+            if (!app) {
+                app = thisApp;
+            } else {
+                app.labels.push(thisApp.labels);
+            }
+            // save
+            app.save(function (err) {
+                // resend error
+            });
+            console.log("app \""+ thisApp.name + " saved");
+        });
+    });
+}
