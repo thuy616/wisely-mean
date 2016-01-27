@@ -231,7 +231,7 @@ router.route('/apps')
         });
     });
 
-router.route("/scrape")
+router.route("/apps/google")
     .post(function(req, res) {
 
         console.log("scraping triggered");
@@ -241,6 +241,65 @@ router.route("/scrape")
         res.json({message: "Scraping done!"});
 
     })
+    .get(function(req, res) {
+
+        var url_parts = url.parse(req.url, true);
+        var query = url_parts.query;
+
+        var filter = query.filter
+
+        if (filter == "all" || !filter) {
+            // ?filter=all
+            App.find(function(err, apps) {
+                if (err)
+                    res.send(err);
+
+                res.json(apps);
+            });
+        } else {
+            // e.g.: ?filter=top_paid_apps
+            App.find({'labels' : filter}, function(err, apps) {
+                if (err)
+                    res.send(err);
+
+                res.json(apps);
+            });
+        }
+    });
+
+router.route("/apps/apple")
+    .get(function(req, res) {
+        var helper = require("./apple_connector");
+
+        var url_parts = url.parse(req.url, true);
+        var query = url_parts.query;
+
+        var filter = query.filter
+
+        if (filter === "all" || !filter) {
+            // ?filter=all
+
+            helper.load_all(function(apps){
+                console.log("free apps: " + apps.length);
+                res.json(apps);
+            });
+
+        } else if (filter === "top_paid_apps") {
+            helper.load_top_paid(function(apps){
+                // do something
+                res.json(apps);
+            });
+        } else if (filter === "top_free_apps") {
+            helper.load_top_free(function(apps){
+                // do something
+                res.json(apps);
+            });
+        }
+
+
+
+
+    });
 
 // REGISTER OUR ROUTES -------------------------------
 app.use('/api', router);

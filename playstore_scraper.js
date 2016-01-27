@@ -12,7 +12,6 @@ var url_top_free = "https://play.google.com/store/apps/collection/topselling_fre
 
 
 exports.scrape_top_free = function(callback) {
-
     request(url_top_free, function (error, response, body) {
         console.log("scraping free apps started...");
 
