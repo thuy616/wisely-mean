@@ -231,7 +231,7 @@ router.route('/apps')
         });
     });
 
-router.route("/apps/google")
+router.route("/apps/android")
     .post(function(req, res) {
 
         console.log("scraping triggered");
@@ -265,9 +265,18 @@ router.route("/apps/google")
                 res.json(apps);
             });
         }
+    })
+
+    .delete(function(req, res) {
+        App.remove(function(err, apps) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'All apps Successfully deleted' });
+        });
     });
 
-router.route("/apps/apple")
+router.route("/apps/ios")
     .get(function(req, res) {
         var helper = require("./apple_connector");
 
