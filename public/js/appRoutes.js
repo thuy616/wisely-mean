@@ -1,23 +1,24 @@
+
 angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    console.log("appRoutes working...");
+    $routeProvider
 
-	$routeProvider
+    // home page
+        .when('/', {
+            templateUrl: 'views/home.html',
+            controller: 'MainController'
+        })
 
-		// home page
-		.when('/', {
-			templateUrl: 'views/home.html',
-			controller: 'MainController'
-		})
+        .when('/bears', {
+            templateUrl: 'views/bear.html',
+            controller: 'BearController'
+        })
 
-		.when('/ios', {
-			templateUrl: 'views/ios.html',
-			controller: 'AppleAppsController'
-		})
+        .when('/geeks', {
+            templateUrl: 'views/geek.html',
+            controller: 'GeekController'
+        });
 
-		.when('/android', {
-			templateUrl: 'views/android.html',
-			controller: 'GoogleAppsController'
-		});
-
-	$locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
 
 }]);

@@ -322,7 +322,13 @@ app.use('/api', router);
 //});
 //
 //app.use('/public', front_router);
-app.use(express.static('public'));
+//app.use(express.static('public'));
+
+// front-end routes
+app.get('*', function(req, res) {
+    console.log("load our public//index.html file");
+    res.sendfile('./public/index.html'); // load our public/index.html file
+});
 
 // START THE SERVER
 // =============================================================================

@@ -1,2 +1,3 @@
-angular.module('sampleApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'NerdCtrl', 'NerdService', 'GeekCtrl', 'GeekService']);
+//var app = angular.module('appsWar', []);
+angular.module('appsWar', ['ngRoute', 'appRoutes', 'MainCtrl', 'BearCtrl', 'BearService', 'GeekCtrl', 'GeekService', 'AppleAppsCtrl', 'iosApps', 'GoogleAppsCtrl', 'androidApps']);
 
