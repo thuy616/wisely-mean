@@ -9,11 +9,7 @@ function bearController($scope, bearService) {
 		console.log("successfully get bears");
 		$scope.bears = data;
 	});
-	//console.log("all bears are: ");
-	//console.log(bears);
-	//console.log("$$$$$$$$$$$$$$$$");
-	//console.log(bears.toString());
-	//$scope.bears = bears;
+
 }
 
 bearController.$inject = ['$scope', 'bearService'];
