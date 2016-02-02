@@ -56,10 +56,11 @@ router.route('/bears')
 
         var bear = new Bear();		// create a new instance of the Bear model
         bear.name = req.body.name;  // set the bears name (comes from the request)
-        bear.specie = req.body.specie;
+        bear.species = req.body.species;
+        bear.imageUrl = req.body.imageUrl;
 
         console.log("name: " + req.body.name);
-        console.log("specie: " + req.body.specie);
+        console.log("species: " + req.body.specie);
 
         bear.save(function(err) {
             if (err)
@@ -340,7 +341,8 @@ var addOrUpdateApps = function(apps) {
         // find app with the same google id (not the default mongo _id)
         App.findOne({'name': thisApp.name}, function (err, app) {
             if (err) {
-                // resend err
+                console.log("error find :");
+                console.log(err);
             }
             if (!app) {
                 app = thisApp;
@@ -349,7 +351,10 @@ var addOrUpdateApps = function(apps) {
             }
             // save
             app.save(function (err) {
-                // resend error
+                if (err) {
+                    console.log("error save: ");
+                    console.log(err);
+                }
             });
             console.log("app \""+ thisApp.name + " saved");
         });

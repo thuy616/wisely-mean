@@ -56,14 +56,14 @@ var readData = function(body, label) {
         thisApp.genres = [];
 
         thisApp.labels.push(label);
-        thisApp.img_large = $(cover_img).attr("data-cover-large");
-        thisApp.img_small = $(cover_img).attr("data-cover-small");
-        thisApp.img_medium = thisApp.img_large;
+        thisApp.image_large = $(cover_img).attr("data-cover-large");
+        thisApp.image_small = $(cover_img).attr("data-cover-small");
+        thisApp.image_medium = thisApp.img_large;
 
 
         var details = $(app).children(".details");
         thisApp.name = $(details).find(".title").attr("title");
-        thisApp.url = $(details).find(".card-click-target").attr("href");
+        thisApp.url = "https://play.google.com" + $(details).find(".card-click-target").attr("href");
         thisApp.developer = $(details).find(".subtitle").attr("title");
         thisApp.developer_url = $(details).find(".subtitle").attr("href");
         thisApp.description = $(details).find(".description").text();
@@ -71,7 +71,7 @@ var readData = function(body, label) {
         thisApp.rating = $(app).children(".reason-set").find(".current-rating").attr("style").replace(/[^0-9.]/g, '');
         thisApp.rating_count = null;
         thisApp.price = "0";
-        thisApp.currency = ""
+        thisApp.currency = "";
         var price = $(app).children(".reason-set").find("display-price");
         if (!price) {
             thisApp.price = price.text();

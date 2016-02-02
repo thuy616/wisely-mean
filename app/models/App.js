@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var AppSchema = new Schema({
     name: String,
     labels: [String], // top_paid_apps, top_free_apps, top_grossing_apps, top_paid_games, top_free_games
-    price: Number,
+    price: String,
     currency: String,
     url: String,
     description: String,

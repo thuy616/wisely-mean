@@ -2,18 +2,24 @@
  * Created by thuy on 28/01/16.
  */
 
-angular.module('androidApps', []).factory('andoirdApps', ['$http', function($http) {
-    return
+angular.module('androidService', []).factory('androidService', ['$http', function($http) {
 
-    $http.get('/api/apps/android')
-        .success(function(data) {
-            console.log("success...");
-            return data;
-        })
-        .error(function(err) {
-            return err;
-        });
 
+    return {
+        // call to get all android apps
+        get: function () {
+            console.log("calling the backend api - get all android apps!");
+            return $http.get('/api/apps/android')
+                .success(function (data) {
+                    console.log("results:");
+                    console.log(data);
+                    return data;
+                })
+                .error(function (data) {
+                    return data;
+                });
+        }
+    }
 
 }]);
 

@@ -1,14 +1,14 @@
 <div class="container">
     <h2>{{tagline}}</h2>
     <div class="row">
-        <div class="col-sm-5 androidApps" ng-repeat="app in data">
+        <div class="col-sm-3" ng-repeat="app in apps">
             <div class="thumbnail">
-                <a href="#"><img src=""></a>
-                <h3>Title</h3>
-                <h5><a href="#">developer transform to CAP</a></h5>
-                <p>Description</p>
-                <p>Rating</p>
-                <p>Price</p>
+                <a href={{app.url}}><img ng-src={{app.image_small}}></a>
+                <h4>{{app.name}}</h4>
+                <h5><a href={{developer_url}}>{{app.developer}}</a></h5>
+                <p>{{app.description}}</p>
+                <p><input class="rating" data-min="0" data-max="5" data-step="1">{{app.rating}}</p>
+                <p>{{app.price}} {{app.currency}}</p>
             </div>
         </div>
     </div>
