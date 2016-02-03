@@ -8,7 +8,7 @@
                     <h5 ng-init="limit = 40">
                         {{app.name | limitTo: limit}}
                     </h5>
-                    <h6><a href={{developer_url}}>{{app.developer}}</a></h6>
+                    <h6><a href={{app.developer_url}}>{{app.developer}}</a></h6>
                     <p ng-init="limit = 40; moreShown = false">
                         {{app.description | limitTo: limit}}
                         <a ng-show="app.description.length > limit"
