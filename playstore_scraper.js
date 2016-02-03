@@ -47,7 +47,7 @@ var readData = function(body, label) {
     var $ = cheerio.load(body),
         apps = $("div.card-content");
     var results = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 24; i++) {
 
         var app = apps.get(i);
         var cover_img = $(app).find(".cover-image");
@@ -72,10 +72,12 @@ var readData = function(body, label) {
         thisApp.rating_count = null;
         thisApp.price = "0";
         thisApp.currency = "";
-        var price = $(app).children(".reason-set").find("display-price");
-        if (!price) {
-            thisApp.price = price.text();
-            console.log("price: " + thisApp.price);
+        var display_price = $(app).children(".reason-set").find(".display-price");
+
+        if (display_price.text()) {
+            thisApp.price = display_price.text();
+
+            console.log("app.price: " + thisApp.price);
         }
         results.push(thisApp);
     }

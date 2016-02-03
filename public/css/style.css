@@ -3,3 +3,7 @@ body { padding-top:30px; }
 .thumbnail {
     height: 410px;
 }
+
+.thumbnail p {
+    font-size: 12px;
+}

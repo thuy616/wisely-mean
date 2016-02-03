@@ -251,7 +251,7 @@ router.route("/apps/android")
 
         if (filter == "all" || !filter) {
             // ?filter=all
-            App.find(function(err, apps) {
+            App.find({}).sort('-rating').exec(function(err, apps) {
                 if (err)
                     res.send(err);
 
@@ -259,7 +259,7 @@ router.route("/apps/android")
             });
         } else {
             // e.g.: ?filter=top_paid_apps
-            App.find({'labels' : filter}, function(err, apps) {
+            App.find({'labels' : filter}).sort('-rating').exec(function(err, apps) {
                 if (err)
                     res.send(err);
 
@@ -347,7 +347,11 @@ var addOrUpdateApps = function(apps) {
             if (!app) {
                 app = thisApp;
             } else {
-                app.labels.push(thisApp.labels);
+                thisApp.labels.forEach(function(label) {
+                   if (app.labels.indexOf(label) == -1) {
+                       app.labels.push(label);
+                   }
+                });
             }
             // save
             app.save(function (err) {
