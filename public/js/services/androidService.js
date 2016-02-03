@@ -11,9 +11,8 @@ angular.module('androidService', []).factory('androidService', ['$http', functio
             console.log("calling the backend api - get all android apps!");
             return $http.get('/api/apps/android')
                 .success(function (data) {
-                    console.log("results:");
-                    console.log(data);
-                    return data;
+
+                    return processData(data);
                 })
                 .error(function (data) {
                     return data;
@@ -22,6 +21,27 @@ angular.module('androidService', []).factory('androidService', ['$http', functio
     }
 
 }]);
+
+function processData(data) {
+    console.log(data);
+    var processedData = [];
+    data.forEach(function(app){
+        var index = 0;
+        var l = new String();
+
+        app.labels.forEach(function(label) {
+            l += label.split('_').join(' ');
+            if (index < app.labels.length-1) {
+                l += ", "
+            }
+            index ++;
+        });
+        app.label = l;
+        console.log(app.label);
+        processedData.push(app);
+    });
+    return processedData;
+}
 
 //app.factory('androidApps', ['$http', function($http) {
 //

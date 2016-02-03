@@ -4,11 +4,21 @@
         <div class="col-sm-3" ng-repeat="app in apps">
             <div class="thumbnail">
                 <a href={{app.url}}><img ng-src={{app.image_small}}></a>
-                <h4>{{app.name}}</h4>
-                <h5><a href={{developer_url}}>{{app.developer}}</a></h5>
-                <p>{{app.description}}</p>
-                <p><input class="rating" data-min="0" data-max="5" data-step="1">{{app.rating}}</p>
-                <p>{{app.price}} {{app.currency}}</p>
+                <div class="caption">
+                    <h4 ng-init="limit = 50">
+                        {{app.name | limitTo: limit}}
+                    </h4>
+                    <h5><a href={{developer_url}}>{{app.developer}}</a></h5>
+                    <p ng-init="limit = 50; moreShown = false">
+                        {{app.description | limitTo: limit}}
+                        <a ng-show="app.description.length > limit"
+                           href ng-click="limit=app.description.length; moreShown = true">  More
+                        </a>
+                    </p>
+                    <input-stars max="5" ng-model="prop1" value={{(app.rating/20).toFixed(1)}} readonly="true" ></input-stars>
+                    <p>Rating: {{(app.rating/20).toFixed(1)}}</p>
+                    <p>Labels: {{app.label}} <span style="float:right">Price: {{app.price}} {{app.currency}}</span></p>
+                </div>
             </div>
         </div>
     </div>
