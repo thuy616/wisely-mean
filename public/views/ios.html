@@ -1,13 +1,13 @@
 <div class="container">
     <h2>{{tagline}}</h2>
     <div class="row">
-        <div class="col-sm-2" ng-repeat="app in apps">
+        <div class="col-sm-3" ng-repeat="app in apps">
             <div class="thumbnail">
                 <a href={{app.url}}><img ng-src={{app.image_large}} style="zoom:1.5;"></a>
                 <div class="caption">
-                    <h5 ng-init="limit = 40">
+                    <a href={{app.url}}><h5 ng-init="limit = 40">
                         {{app.name | limitTo: limit}}
-                    </h5>
+                    </h5></a>
                     <h6><a href={{app.developer_url}}>{{app.developer}}</a></h6>
                     <p ng-init="limit = 40; moreShown = false">
                         {{app.description | limitTo: limit}}

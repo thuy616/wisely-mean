@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+
+    <title>iOS and Android Top Apps side-by-side</title>
+
+    <!-- CSS -->
+    <!--<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
+    <link rel="stylesheet" href="css/component.css">
+    <link rel="stylesheet" href="libs/angular-input-stars-directive/angular-input-stars.css">
+    <!-- JS -->
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular-route/angular-route.min.js"></script>
+    <script src="libs/angular-input-stars-directive/angular-input-stars.js"></script>
+
+    <!-- ANGULAR CUSTOM -->
+    <script src="js/controllers/MainCtrl.js"></script>
+    <script src="js/controllers/AppleAppsCtrl.js"></script>
+    <script src="js/services/iosService.js"></script>
+    <script src="js/controllers/GoogleAppsCtrl.js"></script>
+    <script src="js/services/androidService.js"></script>
+    <script src="js/controllers/GeekCtrl.js"></script>
+    <script src="js/services/GeekService.js"></script>
+    <script src="js/controllers/BearCtrl.js"></script>
+    <script src="js/services/BearService.js"></script>
+    <script src="js/appRoutes.js"></script>
+    <script src="js/iosRoutes.js"></script>
+    <script src="js/androidRoutes.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="libs/custom/modernizr.custom.js"></script>
+
+
+</head>
+<body>
+<div class="container">
+    <div id="splitLayout" class="splitlayout">
+        <div class="intro">
+            <h1>Apps War</h1>
+            <div id="android" class="side side-left" ng-app="androidApp" ng-controller="GoogleAppsController">
+                <header class="codropsheader clearfix">
+                    <span>Google's Play Store</span>
+
+                    <div class="demos">
+                        <a class="current" href="index_split.html">All</a>
+                        <a href="android.html">Top Paid</a>
+                        <a href="top_free.html">Top Free</a>
+                    </div>
+                </header>
+
+                <div ng-view>
+
+                </div>
+            </div>
+
+
+            <div id="ios" class="side side-right" ng-app="iosApp" ng-controller="AppleAppsController">
+                <header class="codropsheader clearfix">
+                <span>Apple's App Store</span>
+
+                    <div class="demos demos-right">
+                        <a class="current" href="ios.html">All</a>
+                        <a href="top_paid.html">Top Paid</a>
+                        <a href="top_free.html">Top Free</a>
+                    </div>
+                </header>
+
+                <div ng-view>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script src="js/scraper.js"></script>
+<!--<script src="libs/custom/classie.js"></script>-->
+<!--<script src="libs/custom/cbpSplitLayout.js"></script>-->
+<script>
+    angular.bootstrap(document.getElementById("android"), ['androidApp']);
+    angular.bootstrap(document.getElementById("ios"), ['iosApp']);
+</script>
+
+</body>
+</html>
