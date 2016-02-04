@@ -290,7 +290,7 @@ router.route("/apps/ios")
             // ?filter=all
 
             helper.load_all(function(apps){
-                console.log("free apps: " + apps.length);
+                console.log("all apps: " + apps.length);
                 res.json(apps);
             });
 
@@ -305,9 +305,6 @@ router.route("/apps/ios")
                 res.json(apps);
             });
         }
-
-
-
 
     });
 

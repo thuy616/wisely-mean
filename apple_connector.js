@@ -3,8 +3,9 @@
  */
 var request = require("request");
 var App = require('./app/models/app');
-var url_top_free = "https://itunes.apple.com/fi/rss/topfreeapplications/limit=10/json";
-var url_top_paid = "https://itunes.apple.com/fi/rss/toppaidapplications/limit=10/json";
+var url_top_free = "https://itunes.apple.com/fi/rss/topfreeapplications/limit=24/json";
+var url_top_paid = "https://itunes.apple.com/fi/rss/toppaidapplications/limit=24/json";
+var app_detail = "https://itunes.apple.com/lookup?id=";
 
 exports.load_top_free = function(callback) {
     request(url_top_free, function (error, response, body) {
@@ -63,8 +64,35 @@ var readJson = function(json, label) {
         thisApp.currency = app["im:price"]["attributes"]["currency"];
         thisApp.developer = app["im:artist"]["label"];
         thisApp.developer_url = app["im:artist"]["attributes"]["href"];
-        thisApp.rating = null;
-        thisApp.rating_count = null;
+        thisApp.externalId = app["id"]["attributes"]["im:id"];
+        console.log("apple\'s id: " + thisApp.externalId);
+        var url = app_detail + thisApp.externalId;
+
+        request(url, function (err, res, b) {
+            var j = JSON.parse(b);
+            var a = j["results"][0];
+
+            if (!a) {
+                console.log("undefined: " + url);
+                thisApp.rating = null;
+                thisApp.rating_count = null;
+                return;
+            }
+
+            if ("averageUserRatingForCurrentVersion" in a) {
+                thisApp.rating = a["averageUserRatingForCurrentVersion"];
+            } else {
+                thisApp.rating = null;
+            }
+
+            if ("trackContentRating" in a) {
+                thisApp.content_rating = a["trackContentRating"];
+            } else {
+                thisApp.content_rating = null;
+            }
+
+        });
+
         apps.push(thisApp);
     });
     return apps;

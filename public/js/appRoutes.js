@@ -22,6 +22,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
         .when('/android', {
             templateUrl: 'views/android.html',
             controller: 'GoogleAppsController'
+        })
+
+        .when('/ios', {
+            templateUrl: 'views/ios.html',
+            controller: 'AppleAppsController'
         });
 
     $locationProvider.html5Mode(true);
