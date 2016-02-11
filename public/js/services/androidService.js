@@ -8,10 +8,9 @@ angular.module('androidService', []).factory('androidService', ['$http', functio
     return {
         // call to get all android apps
         get: function () {
-            console.log("calling the backend api - get all android apps!");
+            //console.log("calling the backend api - get all android apps!");
             return $http.get('/api/apps/android')
                 .success(function (data) {
-
                     return processData(data);
                 })
                 .error(function (data) {
@@ -23,7 +22,6 @@ angular.module('androidService', []).factory('androidService', ['$http', functio
 }]);
 
 function processData(data) {
-    console.log(data);
     var processedData = [];
     data.forEach(function(app){
         var index = 0;
@@ -37,7 +35,7 @@ function processData(data) {
             index ++;
         });
         app.label = l;
-        console.log(app.label);
+        //console.log(app.label);
         processedData.push(app);
     });
     return processedData;

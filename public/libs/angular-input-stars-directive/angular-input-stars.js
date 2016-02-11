@@ -59,7 +59,7 @@ angular.module('angular-input-stars', [])
             };
 
             scope.unpaintStars = function ($index, hover) {
-                console.log("unpaint stars");
+                //console.log("unpaint stars");
 
                 scope.paintStars(scope.last_value - 1, hover);
 
@@ -67,7 +67,7 @@ angular.module('angular-input-stars', [])
 
             scope.paintStars = function ($index, hover) {
 
-                console.log("painting stars: " + $index);
+                //console.log("painting stars: " + $index);
 
                 //ignore painting, if readonly
                 if (scope.readonly) {
@@ -78,16 +78,16 @@ angular.module('angular-input-stars', [])
                 for (var index = 0; index < items.length; index++) {
 
                     var $star = angular.element(items[index]);
-                    console.log("$index or rating value : " + $index);
+                    //console.log("$index or rating value : " + $index);
                     if ($index >= index) {
-                        console.log(index + " full icon");
+                        //console.log(index + " full icon");
                         $star.removeClass(emptyIcon);
                         $star.addClass(fullIcon);
                         $star.addClass('active');
 
 
                     } else if ($index >= index-0.5) {
-                        console.log(index + " half icon");
+                        //console.log(index + " half icon");
                         $star.removeClass(emptyIcon);
                         $star.removeClass(fullIcon);
                         $star.addClass(halfIcon);
@@ -109,9 +109,6 @@ angular.module('angular-input-stars', [])
             };
 
             scope.setValue = function (index, e) {
-
-                console.log("setValue");
-
                 //ignore painting
                 if (scope.readonly) {
                     return;

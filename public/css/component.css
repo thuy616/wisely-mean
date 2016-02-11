@@ -20,7 +20,7 @@ body {
 
 /* Intro sides */
 .side {
-    position: fixed;
+    display: table-cell;
     top: 0;
     z-index: 100;
     width: 50%;

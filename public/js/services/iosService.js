@@ -4,7 +4,6 @@ angular.module('iosService', []).factory('iosService', ['$http', function($http)
     return {
         // call to get all ios apps
         get: function () {
-            console.log("calling the backend api - get all ios apps!");
             return $http.get('/api/apps/ios')
                 .success(function (data) {
 
@@ -19,7 +18,6 @@ angular.module('iosService', []).factory('iosService', ['$http', function($http)
 }]);
 
 function processData(data) {
-    console.log(data);
     var processedData = [];
     data.forEach(function(app){
         var index = 0;
@@ -33,7 +31,7 @@ function processData(data) {
             index ++;
         });
         app.label = l;
-        console.log(app.label);
+        //console.log(app.label);
         processedData.push(app);
     });
     return processedData;
